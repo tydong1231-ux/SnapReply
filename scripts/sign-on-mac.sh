@@ -34,4 +34,10 @@ echo "Using Python: $PYTHON"
 
 # Apple requires a signed-in iCloud account for shortcuts sign.
 shortcuts sign --mode anyone --input dist/SnapReply-unsigned.shortcut --output dist/SnapReply.shortcut
-echo 'Ready: dist/SnapReply.shortcut — import on iPhone or Mac; set private API key on device.'
+echo 'Signed: dist/SnapReply.shortcut'
+if [[ "${SNAPREPLY_NO_OPEN:-0}" != "1" ]]; then
+  echo 'Opening Shortcuts.app to import the full workflow. Click Add Shortcut.'
+  open -a Shortcuts "$PWD/dist/SnapReply.shortcut" || echo 'Open dist/SnapReply.shortcut manually (signing succeeded).'
+fi
+echo 'After importing, enable Shortcuts iCloud Sync on Mac and iPhone, or AirDrop the signed file.'
+echo 'Configure your API Key privately on your device; never publish that configured copy.'

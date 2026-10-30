@@ -6,7 +6,21 @@
 
 **状态说明：** 源码生成和静态测试已通过；GitHub Actions 的苹果签名已经验证**失败（缺少 iCloud 登录）**，iOS 26.2 真机运行仍需实际验证，不能把静态测试当成安装成功。
 
-## 只用 iPhone 安装（推荐）
+## 一次性导入全部动作（推荐）
+
+已自动生成全部 11 个快捷指令动作，**无需在 iPhone 逐个添加**。你有 Mac 的话，在已登录 iCloud 的 Mac 终端执行：
+
+```sh
+cd ~/smartmontools-usb/SnapReply
+git pull
+zsh scripts/sign-on-mac.sh
+```
+
+脚本现在会完成生成、测试、签名并**自动打开苹果「快捷指令」App**。点击「添加快捷指令」即可导入全部动作。Mac 与 iPhone 同一 Apple 账号且「快捷指令」开启 iCloud 同步时，手机上会出现 SnapReply；也可以将已签名文件 `dist/SnapReply.shortcut` 通过 AirDrop 传给手机。
+
+首次在手机上填自己的 Base URL / API Key / Model。**不要将填入 API Key 的副本分享出去**。若未来要让其他人只点一下就安装空白模板，可以从「快捷指令」App 把**未填真实 API Key 的副本**分享为 iCloud 链接，放到 README。
+
+## 只用 iPhone、完全不碰 Mac
 
 **无需 Mac、Python、签名或开发者账号**：在 iPhone 自带「快捷指令」App 里创建同等流程，详见 [iPhone 一步步教程](docs/iphone-setup.zh-CN.md)。这是完全手机端的方案；首次需要手动添加动作。GitHub 自动构建生成的未签名文件仍然不能直接导入 iPhone。
 
