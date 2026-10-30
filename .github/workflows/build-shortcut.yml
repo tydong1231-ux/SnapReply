@@ -1,4 +1,4 @@
-name: Build and sign SnapReply template
+name: Build SnapReply template
 on:
   push:
     branches: [main]
@@ -7,8 +7,8 @@ permissions:
   contents: read
 jobs:
   build:
-    runs-on: macos-latest
-    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
@@ -18,15 +18,13 @@ jobs:
         run: |
           python3 -m unittest discover -s tests -v
           python3 scripts/scan_release.py dist/SnapReply-unsigned.shortcut
-      - name: Sign template with Apple Shortcuts
-        run: |
-          command -v shortcuts
-          shortcuts sign --mode anyone --input dist/SnapReply-unsigned.shortcut --output dist/SnapReply.shortcut
-          test -s dist/SnapReply.shortcut
-      - name: Upload installable shortcut
+      - name: Upload unsigned development template
         uses: actions/upload-artifact@v4
         with:
-          name: SnapReply-iPhone-Shortcut
-          path: dist/SnapReply.shortcut
+          name: SnapReply-UNSIGNED-source-template
+          path: dist/SnapReply-unsigned.shortcut
           if-no-files-found: error
           retention-days: 30
+# Apple's shortcuts sign requires a logged-in iCloud account. GitHub-hosted
+# macOS runners have no iCloud login and therefore cannot sign this template.
+# Run zsh scripts/sign-on-mac.sh on your personal, iCloud-signed-in Mac instead.
