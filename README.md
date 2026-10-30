@@ -4,7 +4,7 @@
 
 An independently implemented, open-source Apple Shortcuts workflow for iPhone. No custom keyboard, app developer account, Xcode project or App Store submission required. Made for Chinese-language customer replies in WeChat; also works with other visible conversations.
 
-**Status:** MVP template and static tests completed. Apple signing on GitHub-hosted macOS and real iPhone / iOS 26.2 usage still require validation. This is not an app that reads WeChat's internal chat history.
+**Status:** MVP template and static tests completed. Apple signing on GitHub-hosted macOS was tested and **fails because runners are not signed into iCloud**; real iPhone / iOS 26.2 usage still requires validation. This is not an app that reads WeChat's internal chat history.
 
 [简体中文说明](README.zh-CN.md) · [Security](SECURITY.md)
 
@@ -17,18 +17,18 @@ An independently implemented, open-source Apple Shortcuts workflow for iPhone. N
 
 No continuous screen recording, auto-sending, remote repository updates, or third-party telemetry. Only **one API request per invocation**. The shortcut cannot see messages that are off-screen.
 
-## Install with GitHub Actions (easiest)
+## GitHub Actions: build/test only (not installable)
 
-1. Open this repository's **Actions → Build and sign SnapReply template**. Select the newest **successful** run (or **Run workflow**).
-2. Download the **SnapReply-iPhone-Shortcut** artifact. Unzip it to get `SnapReply.shortcut`.
-3. Open that file on your iPhone and import into Apple's **Shortcuts** app. If import questions are displayed, enter:
+GitHub Actions automatically builds, tests and publishes **SnapReply-UNSIGNED-source-template** as a development artifact. **This unsigned file cannot be imported directly on an iPhone.** The original signing step was tested and rejected with Apple's error: *“In order to do this, you must be signed into iCloud.”* Use a Mac signed into iCloud to run the script below.
+
+After signing locally, import the resulting `SnapReply.shortcut` on iPhone. If import questions are displayed, enter:
    - **Base URL**: `https://api.openai.com/v1` (no trailing `/`)
    - **API Key**: your **private** API key, entered on-device only
    - **Model**: `gpt-5.4-mini` (or a vision-capable Chat Completions-compatible model)
-4. If import prompts did not appear, edit the **first three Text actions** in the imported shortcut and enter those values there.
-5. Test with a **fake, non-sensitive** conversation first. On iPhone: **Settings → Accessibility → Touch → Back Tap → Triple Tap → SnapReply**. Optionally assign the Action Button.
+1. If import prompts did not appear, edit the **first three Text actions** in the imported shortcut and enter those values there.
+2. Test with a **fake, non-sensitive** conversation first. On iPhone: **Settings → Accessibility → Touch → Back Tap → Triple Tap → SnapReply**. Optionally assign the Action Button.
 
-If signing fails in GitHub Actions, use the local macOS instructions below. A raw/unsigned file cannot be imported directly on modern iOS. An Actions artifact is **not** a public iCloud shortcut link.
+An Actions artifact is **not** a public iCloud shortcut link.
 
 ## Install using your Mac
 
