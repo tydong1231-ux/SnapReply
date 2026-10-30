@@ -4,20 +4,18 @@
 
 目前是可公开分享的 **MVP 快捷指令模板**，只做截图回复这一条核心流程：**没有后台录屏，不会自动发微信，不会读到屏幕之外的聊天记录。**
 
-**状态说明：** 源码生成和静态测试已通过；GitHub Actions 的 Apple 签名与 iOS 26.2 真机运行需要实际验证，不能把静态测试当成安装成功。
+**状态说明：** 源码生成和静态测试已通过；GitHub Actions 的苹果签名已经验证**失败（缺少 iCloud 登录）**，iOS 26.2 真机运行仍需实际验证，不能把静态测试当成安装成功。
 
-## iPhone 下载安装（首选）
+## 安装方式：先在自己的 Mac 签名
 
-1. 打开本仓库的 [Actions](https://github.com/tydong1231-ux/SnapReply/actions)，选择 **Build and sign SnapReply template** 下最近一个绿色成功的运行记录（也可手动 Run workflow）。
-2. 下载页面底部的 `SnapReply-iPhone-Shortcut` 文件包并解压，得到 `SnapReply.shortcut`。
-3. 在 iPhone 中打开 `.shortcut` 文件并导入苹果「快捷指令」。导入设置填写：
+GitHub Actions 只负责生成和检查 **未签名开发模板**，不能直接在 iPhone 导入。我们已实测 GitHub 的临时 Mac 因未登录 iCloud 而被苹果拒绝签名。因此请在自己的已登录 iCloud 的 Mac 上使用下方一键脚本，生成可安装的 `SnapReply.shortcut`。导入到 iPhone 后，设置：
    - Base URL：`https://api.openai.com/v1`（不能多写尾部斜杠，也不用加 `/chat/completions`）
    - API Key：你自己的私密 Key（**只能在自己的设备上输入**）
    - Model：默认 `gpt-5.4-mini`（支持图片的 OpenAI 兼容模型）
-4. 如果导入时没出现以上问题，请进入快捷指令编辑页面，修改最前面的三个「文本」动作。
-5. 先用没有客户隐私的假聊天测试。iPhone「设置 → 辅助功能 → 触控 → 轻点背面 → 轻点三下 → SnapReply」。有操作按钮的机型也可以绑定。
+1. 如果导入时没出现以上问题，请进入快捷指令编辑页面，修改最前面的三个「文本」动作。
+2. 先用没有客户隐私的假聊天测试。iPhone「设置 → 辅助功能 → 触控 → 轻点背面 → 轻点三下 → SnapReply」。有操作按钮的机型也可以绑定。
 
-如果 GitHub Actions 签名失败，请用下文的 Mac 方案。GitHub 文件夹中的 unsigned 文件不能直接在现代 iPhone 上导入。
+GitHub Actions 可以下载未签名模板做开发调试，但不能直接安装；必须先通过 macOS 的快捷指令 CLI 签名。
 
 ## Mac 本地签名（备用）
 
