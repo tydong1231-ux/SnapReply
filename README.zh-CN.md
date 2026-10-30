@@ -6,7 +6,11 @@
 
 **状态说明：** 源码生成和静态测试已通过；GitHub Actions 的苹果签名已经验证**失败（缺少 iCloud 登录）**，iOS 26.2 真机运行仍需实际验证，不能把静态测试当成安装成功。
 
-## 安装方式：先在自己的 Mac 签名
+## 只用 iPhone 安装（推荐）
+
+**无需 Mac、Python、签名或开发者账号**：在 iPhone 自带「快捷指令」App 里创建同等流程，详见 [iPhone 一步步教程](docs/iphone-setup.zh-CN.md)。这是完全手机端的方案；首次需要手动添加动作。GitHub 自动构建生成的未签名文件仍然不能直接导入 iPhone。
+
+## 从 GitHub 文件安装：在自己的 Mac 签名
 
 GitHub Actions 只负责生成和检查 **未签名开发模板**，不能直接在 iPhone 导入。我们已实测 GitHub 的临时 Mac 因未登录 iCloud 而被苹果拒绝签名。因此请在自己的已登录 iCloud 的 Mac 上使用下方一键脚本，生成可安装的 `SnapReply.shortcut`。导入到 iPhone 后，设置：
    - Base URL：`https://api.openai.com/v1`（不能多写尾部斜杠，也不用加 `/chat/completions`）
