@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+private/
+secrets/
+*.heic
+*.png
+*.jpeg
+*.jpg
+*.webp
+dist/
+*.signed.shortcut

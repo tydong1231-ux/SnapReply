@@ -1,0 +1,32 @@
+name: Build and sign SnapReply template
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: macos-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Build unsigned shortcut
+        run: python3 src/build_shortcut.py --output dist/SnapReply-unsigned.shortcut
+      - name: Test output and scan for secrets
+        run: |
+          python3 -m unittest discover -s tests -v
+          python3 scripts/scan_release.py dist/SnapReply-unsigned.shortcut
+      - name: Sign template with Apple Shortcuts
+        run: |
+          command -v shortcuts
+          shortcuts sign --mode anyone --input dist/SnapReply-unsigned.shortcut --output dist/SnapReply.shortcut
+          test -s dist/SnapReply.shortcut
+      - name: Upload installable shortcut
+        uses: actions/upload-artifact@v4
+        with:
+          name: SnapReply-iPhone-Shortcut
+          path: dist/SnapReply.shortcut
+          if-no-files-found: error
+          retention-days: 30
